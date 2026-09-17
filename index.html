@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PS4 Ormoc Jailbreaker</title>
+<style>
+  :root {
+    --bg-main: #0a0c10;
+    --bg-card: #13171e;
+    --bg-accent: #1c2330;
+    --text-primary: #f0f3f6;
+    --text-muted: #8b949e;
+    --color-ok: #34d399;
+    --color-warn: #fbbf24;
+    --color-bad: #f87171;
+    --color-blue: #3b82f6;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font: 16px/1.5 "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  #brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px 15px;
+    background: linear-gradient(180deg, #10141d 0%, var(--bg-main) 100%);
+    border-bottom: 1px solid var(--bg-accent);
+  }
+  
+  #brand img {
+    width: 154px;
+    height: 38px;
+    object-fit: contain;
+  }
+  
+  #brand b {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ffffff 0%, #a3b3cc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  #wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .status-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-accent);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  
+  #state {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+  }
+  
+  #det {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  
+  #det b {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  
+  #out {
+    white-space: pre-wrap;
+    font: 13px/1.6 Consolas, "SFMono-Regular", Menlo, monospace;
+    background: #07090d;
+    border: 1px solid var(--bg-accent);
+    border-radius: 8px;
+    padding: 16px;
+    height: calc(85vh - 290px);
+    min-height: 200px;
+    overflow-y: auto;
+    color: #e1e7ef;
+  }
+  
+  .contact-box {
+    text-align: center;
+   
+  }
+
+  .contact-number {
+    font-size: 25px;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+  }
+  
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  #cache {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  #cache::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+  
+  .credits {
+    font-size: 14px;
+	font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+  
+  .credits b {
+    color: #a3b3cc;
+    font-weight: 700;
+  }
+  
+  /* Status Text Modifier Colors */
+  .ok { color: var(--color-ok); }
+  .bad { color: var(--color-bad); }
+  .warn { color: var(--color-warn); }
+  .cacheok { color: var(--color-ok); }
+  
+  /* Interactive prompt breathing animations for TV screens */
+  .prompt-active {
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+  }
+</style>
+</head>
+<body>
+
+<div id="brand">
+  <img src="logo_raw.png" alt="" width="28" height="28">
+  <b>Ormoc Gaming Console Repair</b>
+</div>
+
+<div id="wrap">
+  <div class="status-panel">
+    <div id="state">loading poops chain...</div>
+    <div id="det"></div>
+  </div>
+  
+  <div id="out"></div>
+  
+    <div class="contact-box">
+    <div class="contact-number">09066876054</div>
+  </div>
+  
+  <div class="footer-row">
+    <div>
+      <div id="cache">checking...</div>
+    </div>
+    <div class="credits">
+      Created by: <b>Aladin F. Toel</b>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var stateEl = document.getElementById("state");
+  var detEl = document.getElementById("det");
+  var cacheEl = document.getElementById("cache");
+
+  function setState(t, c) {
+    stateEl.textContent = t;
+    stateEl.className = c || "";
+    if (c === "warn" || t.indexOf("--") !== -1) {
+      stateEl.classList.add("prompt-active");
+    } else {
+      stateEl.classList.remove("prompt-active");
+    }
+  }
+
+  function setCache(t, ok) {
+    cacheEl.textContent = t;
+    cacheEl.className = ok ? "cacheok" : "";
+  }
+
+  var params = new URLSearchParams(location.search);
+  var key = null, fwnum = null;
+  var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+  if (m) {
+    var minor = parseInt(m[2], 16);
+    var ms = minor.toString(16);
+    if (ms.length < 2) ms = "0" + ms;
+    key = m[1] + "." + ms;
+    fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+  }
+
+  var bug = null, why = "";
+  var forced = params.get("bug");
+  if (forced === "poops") {
+    bug = "poops";
+    why = "forced via ?bug=poops";
+  } else if (!key) {
+    why = "user-agent is not a PlayStation 4";
+  } else if (fwnum >= 1250) {
+    bug = "poops";
+    why = key + " >= 12.50";
+  } else {
+    why = key + " -- no working bug (poops needs firmware 12.50 or higher)";
+  }
+
+  detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>" + " &middot; bug <b>" + (bug || "none") + "</b> &middot; " + why;
+
+  function go() {
+    if (!bug) {
+      setState("UNSUPPORTED FIRMWARE", "bad");
+      return;
+    }
+    setState("loading poops chain...", "warn");
+    if (!window.location.pathname.endsWith("index.html")) {
+      location.replace("index.html" + location.search);
+    }
+  }
+
+  var ac = window.applicationCache;
+  if (!ac || !document.documentElement.hasAttribute("manifest")) {
+    go();
+  } else if (!navigator.onLine) {
+    setCache("offline -- from cache", true);
+    go();
+  } else if (ac.status === ac.IDLE) {
+    setCache("cached", true);
+    go();
+  } else if (ac.status === ac.UPDATEREADY) {
+    try { ac.swapCache(); } catch (e) {}
+    setCache("update downloaded", true);
+    waitForTap("UPDATE READY -- press X or tap to reload & run", function () {
+      location.reload();
+    });
+  } else {
+    setCache("checking cache...");
+    ac.addEventListener("downloading", function () {
+      setCache("caching for offline (first run)...");
+    }, false);
+    ac.addEventListener("progress", function (e) {
+      if (e && e.total) setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+    }, false);
+    ac.addEventListener("cached", function () {
+      setCache("cached for offline use", true);
+      waitForTap("CACHED (first run) -- press X or tap to run", go);
+    }, false);
+    ac.addEventListener("updateready", function () {
+      try { ac.swapCache(); } catch (e) {}
+      setCache("update downloaded", true);
+      waitForTap("UPDATE READY -- press X or tap to reload & run", function () {
+        location.reload();
+      });
+    }, false);
+    ac.addEventListener("noupdate", function () {
+      setCache("cached -- offline ready", true);
+      go();
+    }, false);
+    ac.addEventListener("error", function () {
+      setCache("cache unavailable");
+      waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
+    }, false);
+    ac.addEventListener("obsolete", function () {
+      setCache("cache obsolete");
+      waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
+    }, false);
+  }
+})();
+</script>
+<script type="module">import "./chain_poops.js";</script>
+</body>
+</html>
